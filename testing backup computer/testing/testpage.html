@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts (poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <!-- Fontawesome -->
+    <script src="https://kit.fontawesome.com/62a509939c.js" crossorigin="anonymous"></script>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Alkali Systems</h1>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Login</a>
+      </div>
+      
+
+    <script>
+        // Get elements from the DOM
+
+    </script>
+    <style>
+* {box-sizing: border-box;}
+body {
+    font-family: var(--ff-manrope);
+  margin: 0;
+  background:#000;
+  text-align: center;
+  background-image: url(bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.container {
+  overflow: hidden;
+  background-color: white;
+  text-align:center;
+}
+
+.container h1 {
+    display: inline-flex;
+  color: gray;
+  text-align: left;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 18px;
+}
+.container a {
+  display: inline-block;
+  color: gray;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 18px;
+}
+.container a::before {
+  content:'';
+  width:0%;
+  height:3px;
+  display:block;
+  background-color: gray;
+  margin-top:10px;
+}
+.container a:hover::before {
+  width:100%;
+  transition:all .5s;
+}
+
+
+    </style>
+</body>
+</html>
