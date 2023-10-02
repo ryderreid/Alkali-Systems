@@ -58,7 +58,7 @@ body {
   #General
 \*-----------------------------------*/
 h1 {
-font-family: var(--ff-manrope);
+  font-family: var(--ff-manrope);
     font-size: 60px;
     text-align: center;
 }
