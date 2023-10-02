@@ -57,6 +57,11 @@ body {
 /*-----------------------------------*\
   #General
 \*-----------------------------------*/
+h1 {
+font-family: var(--ff-manrope);
+    font-size: 60px;
+    text-align: center;
+}
 a {
     color: inherit;
     text-decoration: none;
