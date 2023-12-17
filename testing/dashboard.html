@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Responsive Sidebar Menu  | CodingLab </title>
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com%22%3E/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+    <script src="../assets/javascript/console-logs.js"></script>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+   <style>
+    .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 1); /* Adjust the background color and opacity */
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 18px;
+        z-index: 1000; /* Ensure the overlay is on top of everything */
+      }
+
+      .spinner {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #ffd700;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+   </style>
+<body><!--#ff5e50 (red) #90ff77 (green) #ffd700 (yellow) #54a4ff (blue)-->
+    <!--<div class="notice-banner"> 
+        <p><strong>Important Notice:</strong> We are currently undergoing maintenance. Some services may be temporarily unavailable. We apologize for any inconvenience.</p>
+      </div>-->
+      <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">Demo Company</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="./">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+         <span class="tooltip">Dashboard</span>
+      </li>
+      <li>
+       <a href="./dashboard/hr">
+         <i class='bx bx-user' ></i>
+         <span class="links_name">Human Resources</span>
+       </a>
+       <span class="tooltip">Human Resources</span>
+     </li>
+     <li>
+       <a href="#">
+        <i class='bx bx-file' ></i>
+         <span class="links_name">Job Summary</span>
+       </a>
+       <span class="tooltip">Job Summary</span>
+     </li>
+     <li>
+       <a href="#">
+        <i class='bx bxs-briefcase'></i>
+         <span class="links_name">Job Allocation</span>
+       </a>
+       <span class="tooltip">Job Allocation</span>
+     </li>
+     <li>
+       <a href="#">
+        <i class='bx bx-data'></i>
+         <span class="links_name">Chronos</span>
+       </a>
+       <span class="tooltip">Chronos</span>
+     </li>
+     <li>
+       <a href="#">
+         <i class='bx bx-cog' ></i>
+         <span class="links_name">Setting</span>
+       </a>
+       <span class="tooltip">Setting</span>
+     </li>
+     <li class="profile">
+         <div class="profile-details">
+           <div class="name_job">
+             <div id="username" class="name">(email)</div>
+           </div>
+         </div>
+         <i onclick="logout()" class='bx bx-log-out' id="log_out" ></i>
+     </li>
+    </ul>
+  </div>
+  <section class="home-section">
+      <div id="welcome" class="text">(Welcome Text Could Not Be Found)</div>
+  </section>
+</body>
+</html>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyDBZ2M-Fi4rd_Id5p1CQUuld0nDfPU79sU",
+        authDomain: "alkali-systems.firebaseapp.com",
+        projectId: "alkali-systems",
+        storageBucket: "alkali-systems.appspot.com",
+        messagingSenderId: "93698703749",
+        appId: "1:93698703749:web:0d32fd3364c5e9d1e184ec",
+        measurementId: "G-3MK73RHMTR"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    function logout() {
+    // Display the loading overlay
+    document.getElementById('loadingOverlay').style.display = 'flex';
+
+    // Set a delay (e.g., 2000 milliseconds or 2 seconds)
+    setTimeout(function () {
+        // Hide the loading overlay after the delay
+        document.getElementById('loadingOverlay').style.display = 'none';
+        document.body.style.backgroundColor = '#f0f0f0';
+        document.body.style.overflow = 'visible';
+        // Perform Firebase authentication sign-out
+        firebase.auth().signOut().then(() => {
+            // Sign-out successful, redirect to the login page
+            window.location.href = 'login.html';
+        }).catch((error) => {
+            console.error('Logout failed', error);
+        });
+    }, 3500); // Adjust the delay time as needed
+}
+
+
+    firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      // User is signed in
+      var userEmail = user.email;
+      displayUsername(userEmail);
+      displayWelcome(userEmail);
+    } else {
+      // User is signed out
+      // You can redirect or handle the case when the user is not logged in
+    }
+  });
+
+  function displayUsername(email) {
+    var username = document.getElementById("username");
+    username.textContent = email;
+  }
+  function displayWelcome(email) {
+    var username = document.getElementById("welcome");
+    username.textContent = "Welcome Back," + '\u0020' + email + "!";
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+
+            setTimeout(function() {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                document.body.style.backgroundColor = '#f0f0f0'; 
+                document.body.style.overflow = 'visible';
+            }, 6500);
+        });
+
+        firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        // User is signed in, allow access to the dashboard
+    } else {
+        // User is not signed in, redirect to the login page
+        window.location.href = 'login.html';
+    }
+});
+</script>
+<script src="../assets/javascript/dashboard.js"></script>

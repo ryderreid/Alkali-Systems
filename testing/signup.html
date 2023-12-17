@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Demo Company</title>
+    <link rel="shortcut icon" href="../assets/images/K5otwzfb.png" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/assets/css/login.css">
+    <script src="/assets/javascript/console-logs.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="header"> <!--#ff5e50 (red) #90ff77 (green) #ffd700 (yellow) #54a4ff (blue)-->
+        <h1>Demo Company</h1>
+        <a href="./">Home</a>
+        <a href="./dashboard">Dashboard</a>
+        <a href="./dashboard/hr.html">Human Resources</a>
+        <a href="./login">Login</a>
+    </div>
+
+    <div class="container">
+        <!-- Account Banners -->
+        <div id="accountDisabledBanner">Your account has been disabled. Please contact your administrator for assistance.</div>
+        <div id="accountInfoBanner">Your account email or password is incorrect.</div>
+
+        <!-- Login Form -->
+        <div id="loginFormContainer">
+            <p style="background-color: #ffd700;
+            color: rgb(43, 42, 42);
+            text-align: center;
+            padding: 15px;
+            font-family: 'Manrope', sans-serif; border-radius: 10px;"><strong>Important Notice:</strong> We are currently undergoing maintenance. Some services may be temporarily unavailable. We apologize for any inconvenience.</p>
+            <h2>Signup Demo Company</h2>
+            <form id="signupForm">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+                
+                <label for="displayName">Display Name:</label>
+                <input type="text" id="displayName" required>
+            
+                <button type="submit">Sign Up</button>
+              </form>
+            
+        </div>
+    </div>
+
+    <!-- Include the Firebase SDK with your configuration -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-analytics.js"></script>
+    <script>
+// Import Firebase modules using the new syntax
+// Replace with your Firebase config
+var firebaseConfig = {
+  apiKey: "AIzaSyDBZ2M-Fi4rd_Id5p1CQUuld0nDfPU79sU",
+  authDomain: "alkali-systems.firebaseapp.com",
+  projectId: "alkali-systems",
+  storageBucket: "alkali-systems.appspot.com",
+  messagingSenderId: "93698703749",
+  appId: "1:93698703749:web:0d32fd3364c5e9d1e184ec",
+  measurementId: "G-3MK73RHMTR"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+
+var auth = firebase.auth();
+var firestore = firebase.firestore();
+
+var signupForm = document.getElementById('signupForm');
+
+signupForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  var email = document.getElementById('email').value;
+  var password = document.getElementById('password').value;
+  var displayName = document.getElementById('displayName').value;
+
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(function (userCredential) {
+      // Set user display name
+      userCredential.user.updateProfile({ displayName: displayName });
+
+      // Add user data to Firestore
+      firestore.collection('users').doc(userCredential.user.uid).set({
+        email: email,
+        displayName: displayName,
+      });
+
+      console.log('User signed up successfully:', userCredential.user);
+    })
+    .catch(function (error) {
+      console.error('Error signing up:', error.message);
+    });
+});
+
+
+    </script>
+</body>
+
+</html>

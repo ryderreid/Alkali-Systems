@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Demo Company</title>
+    <link rel="shortcut icon" href="../assets/images/K5otwzfb.png" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/assets/css/login.css">
+    <script src="/assets/javascript/console-logs.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="header"> <!--#ff5e50 (red) #90ff77 (green) #ffd700 (yellow) #54a4ff (blue)-->
+        <h1>Demo Company</h1>
+        <a href="./">Home</a>
+        <a href="./dashboard">Dashboard</a>
+        <a href="./login">Login</a>
+    </div>
+
+    <div class="container">
+        <!-- Account Banners -->
+        <div id="accountDisabledBanner">Your account has been disabled. Please contact your administrator for assistance.</div>
+        <div id="accountInfoBanner">Your account email or password is incorrect.</div>
+
+        <!-- Login Form -->
+        <div id="loginFormContainer">
+            <p style="background-color: #ffd700;
+            color: rgb(43, 42, 42);
+            text-align: center;
+            padding: 15px;
+            font-family: 'Manrope', sans-serif; border-radius: 10px;"><strong>Important Notice:</strong> We are currently undergoing maintenance. Some services may be temporarily unavailable. We apologize for any inconvenience.</p>
+            <h2>Login Demo Company</h2>
+            <form id="loginForm">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="button" onclick="login()">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <footer style="background-color: white; color: #fff; text-align: center; padding:0.1px; position: fixed; bottom: 0; width: 100%">
+        <p style="font-size: 10px; color: gray">&copy; 2023 Alkali Systems</p>
+    </footer>
+
+    <!-- Include the Firebase SDK with your configuration -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script>
+        // Your Firebase project configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDBZ2M-Fi4rd_Id5p1CQUuld0nDfPU79sU",
+            authDomain: "alkali-systems.firebaseapp.com",
+            projectId: "alkali-systems",
+            storageBucket: "alkali-systems.appspot.com",
+            messagingSenderId: "93698703749",
+            appId: "1:93698703749:web:0d32fd3364c5e9d1e184ec",
+            measurementId: "G-3MK73RHMTR"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Get references to the email and password fields
+        const emailField = document.getElementById('email');
+        const passwordField = document.getElementById('password');
+        const accountDisabledBanner = document.getElementById('accountDisabledBanner');
+        const accountInfoBanner = document.getElementById('accountInfoBanner');
+
+        // Function to handle login
+        function login() {
+            const email = emailField.value;
+            const password = passwordField.value;
+
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log(`Logged in as ${user.email}`);
+
+                    // Check if the user's account is disabled
+                    if (user.emailVerified && user.disabled) {
+                        // Display the account disabled banner
+                        accountDisabledBanner.style.display = 'block';
+
+                        // Hide the banner after 5 seconds
+                        setTimeout(() => {
+                            accountDisabledBanner.style.display = 'none';
+                        }, 5000);
+                    } else {
+                        // Redirect to another page after login
+                        window.location.href = 'dashboard.html'; // Replace with your desired URL
+                    }
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error(`Login failed: ${errorCode} - ${errorMessage}`);
+
+                    // Check if the error is due to a disabled account
+                    if (errorCode === 'auth/user-disabled') {
+                        // Display the account disabled banner
+                        accountDisabledBanner.style.display = 'block';
+
+                        // Hide the banner after 5 seconds
+                        setTimeout(() => {
+                            accountDisabledBanner.style.display = 'none';
+                        }, 5000);
+                    } else {
+                        // Display the account info banner for incorrect credentials
+                        accountInfoBanner.style.display = 'block';
+
+                        // Hide the banner after 5 seconds
+                        setTimeout(() => {
+                            accountInfoBanner.style.display = 'none';
+                        }, 5000);
+                    }
+                });
+        }
+    </script>
+</body>
+
+</html>
