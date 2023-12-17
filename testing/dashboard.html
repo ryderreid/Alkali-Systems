@@ -185,6 +185,7 @@
     } else {
         // User is not signed in, redirect to the login page
         window.location.href = 'login.html';
+        console.warn("User tried to access dashboard without logging in!")
     }
 });
 </script>
