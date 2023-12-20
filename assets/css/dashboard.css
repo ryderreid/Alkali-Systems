@@ -10,14 +10,22 @@ body {
 
 .notice-banner {
   font-family: 'Manrope', sans-serif;
-  position: fixed;
-  top: 0;
-text-align: center;
-  width: 100%;
-  padding: 10px;
-  background-color: #ffd700; /* Adjust the background color */
-  color: rgb(43, 42, 42); /* Text color for the notice banner */
-  z-index: 999; /* Ensure the banner is on top of other content */
+  text-align: center;
+  background-color: #ffd700; /* Yellow background color */
+  color: rgb(43, 42, 42); /* Black text color */
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+/* New styles for responsiveness */
+@media only screen and (max-width: 600px) {
+  /* Adjust styles for screens with a maximum width of 600px */
+  .notice-banner {
+    
+    text-align: center;
+    font-size: 14px; /* Decrease font size for smaller screens */
+    padding: 10px;
+  }
 }
 
 

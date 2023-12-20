@@ -13,7 +13,7 @@
    </head>
    <style>
     .loading-overlay {
-        display: none;
+      display: none;
         position: fixed;
         top: 0;
         left: 0;
@@ -25,6 +25,12 @@
         text-align: center;
         font-size: 18px;
         z-index: 1000; /* Ensure the overlay is on top of everything */
+        flex-direction: column; /* Align items in a column */
+      }
+
+      .spinnerimg {
+        width: 15%; /* Adjust the width as needed for your design */
+        margin-bottom: 30px; /* Add space between image and spinner */
       }
 
       .spinner {
@@ -42,11 +48,9 @@
       }
 
    </style>
-<body><!--#ff5e50 (red) #90ff77 (green) #ffd700 (yellow) #54a4ff (blue)-->
-    <!--<div class="notice-banner"> 
-        <p><strong>Important Notice:</strong> We are currently undergoing maintenance. Some services may be temporarily unavailable. We apologize for any inconvenience.</p>
-      </div>-->
+<body>
       <div class="loading-overlay" id="loadingOverlay">
+        <img class="spinnerimg" src="/assets/logos/alkali-systems-high-resolution-logo-transparent.png">
         <div class="spinner"></div>
     </div>
   <div class="sidebar">
@@ -56,42 +60,49 @@
     </div>
     <ul class="nav-list">
       <li>
-        <a href="./">
+        <a href="javascript:void(0);" onclick="showSection('dashboard')">
           <i class='bx bx-grid-alt'></i>
           <span class="links_name">Dashboard</span>
         </a>
          <span class="tooltip">Dashboard</span>
       </li>
-      <li>
-       <a href="./dashboard/hr">
-         <i class='bx bx-user' ></i>
-         <span class="links_name">Human Resources</span>
-       </a>
-       <span class="tooltip">Human Resources</span>
-     </li>
      <li>
-       <a href="#">
+      <a href="javascript:void(0);" onclick="showSection('calendar')">
+        <i class='bx bx-calendar'></i>
+        <span class="links_name">Calendar</span>
+      </a>
+      <span class="tooltip">Calendar</span>
+    </li>
+     <li>
+       <a href="javascript:void(0);" onclick="showSection('job-summary')">
         <i class='bx bx-file' ></i>
          <span class="links_name">Job Summary</span>
        </a>
        <span class="tooltip">Job Summary</span>
      </li>
      <li>
-       <a href="#">
+       <a href="javascript:void(0);" onclick="showSection('job-allocation')">
         <i class='bx bxs-briefcase'></i>
          <span class="links_name">Job Allocation</span>
        </a>
        <span class="tooltip">Job Allocation</span>
      </li>
      <li>
-       <a href="#">
+       <a href="javascript:void(0);" onclick="showSection('chronos')">
         <i class='bx bx-data'></i>
          <span class="links_name">Chronos</span>
        </a>
        <span class="tooltip">Chronos</span>
      </li>
      <li>
-       <a href="#">
+      <a href="javascript:void(0);" onclick="showSection('hr')">
+        <i class='bx bx-user' ></i>
+        <span class="links_name">Human Resources</span>
+      </a>
+      <span class="tooltip">Human Resources</span>
+    </li>
+     <li>
+       <a href="javascript:void(0);" onclick="showSection('settings')">
          <i class='bx bx-cog' ></i>
          <span class="links_name">Setting</span>
        </a>
@@ -107,11 +118,76 @@
      </li>
     </ul>
   </div>
-  <section class="home-section">
+  <!-- Notice Banner Colours #ff5e50 (red) #90ff77 (green) #ffd700 (yellow) #54a4ff (blue)-->
+  <!--
+    Dashboard
+  -->
+  <section id="dashboard" class="home-section">
+    <div class="notice-banner"> 
+      <p id="notice-banner">(Status is not avaliable)</p>
+    </div>
       <div id="welcome" class="text">(Welcome Text Could Not Be Found)</div>
+  </section>
+  <!--
+    Calendar
+  -->
+  <section id="calendar" class="home-section" style="display: none;">
+    <div class="notice-banner"> 
+      <p id="notice-banner">(Status is not avaliable)</p>
+    </div>
+    <div class="text">This is the Calendar</div>
+    <iframe
+      src="https://calendar.google.com/calendar/embed?src=en-gb.australian%23holiday%40group.v.calendar.google.com&ctz=Australia%2FMelbourne"
+      style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+  </section>
+  <!--
+    Job Summary
+  -->
+  <section id="job-summary" class="home-section" style="display: none;">
+    <div class="notice-banner"> 
+      <p id="notice-banner">(Status is not avaliable)</p>
+    </div>
+    <div class="text">This is the Job Summary</div>
+  </section>
+  <!--
+    Job Allocation
+  -->
+  <section id="job-allocation" class="home-section" style="display: none;">
+    <div class="notice-banner"> 
+      <p id="notice-banner">(Status is not avaliable)</p>
+    </div>
+    <div class="text">This is the Job Allocation</div>
+  </section>
+  <!--
+    Chronos Embed
+  -->
+  <section id="chronos" class="home-section" style="display: none;">
+    <div class="notice-banner"> 
+      <p id="notice-banner">(Status is not avaliable)</p>
+    </div>
+    <div class="text">This is Chronos Embed</div>
+  </section>
+  <!--
+    Human Resources
+  -->
+  <section id="hr" class="home-section" style="display: none;">
+    <div class="notice-banner"> 
+      <p id="notice-banner">(Status is not avaliable)</p>
+    </div>
+    <div class="text">This is the Human Resources Management</div>
+  </section>
+  <!--
+    Settings
+  -->
+  <section id="settings" class="home-section" style="display: none;">
+    <div class="notice-banner"> 
+      <p id="notice-banner">(Status is not avaliable)</p>
+    </div>
+    <div class="text">This is the user settings</div>
   </section>
 </body>
 </html>
+<script src="/assets/javascript/notice.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script>
@@ -188,5 +264,19 @@
         console.warn("User tried to access dashboard without logging in!")
     }
 });
+
+function showSection(sectionId) {
+    // Hide all sections
+    var sections = document.getElementsByClassName('home-section');
+    for (var i = 0; i < sections.length; i++) {
+      sections[i].style.display = 'none';
+    }
+
+    // Show the selected section
+    var selectedSection = document.getElementById(sectionId);
+    if (selectedSection) {
+      selectedSection.style.display = 'block';
+    }
+  }
 </script>
 <script src="../assets/javascript/dashboard.js"></script>
